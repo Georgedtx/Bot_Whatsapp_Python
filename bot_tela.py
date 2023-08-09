@@ -53,25 +53,18 @@ def bot():
         msg = todas_as_msg_texto[-1]
         print(msg)
 
-        cliente = 'mensagem do cliente:'
-        texto2 = 'Responda a mensagem do cliente com base no proximo texto'
-        #texto = 'explique tudo sobre hotel Copacabana Palace Endereço: Av. Atlântica, 1111 - Copacabana, Rio de Janeiro -RJ, 22021-111 Telefone: (21) 2548-1111, resevas por email  reserva@email.com, aceitamos todas as formas de pagamentos'
-        questao = cliente + msg + texto2 + texto
-        ####PROCESSA A MENSAGEM NA API ia
 
-        openai.api_key = apiopenai.strip()
-        response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=questao,
-        temperature=0.7,
-        max_tokens=256,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0
-        )
-        resposta = response['choices'][0]['text']
-        print(resposta)
+        ####PROCESSA A MENSAGEM NA API ia
+        sistema = 'explique tudo sobre o hotel Copacabana Palace. Endereço: Av. Atlântica, 1111 - Copacabana, Rio de Janeiro - RJ, 22021-111. Telefone: (21) 2548-1111, reservas por email: reserva@email.com, aceitamos todas as formas de pagamento. OBS: responda com no maximo com 15 palavras'
+        #### PROCESSA A MENSAGEM NA API IA
+
+        chave_api = apiopenai.strip()
+
+        editacodigo = 'abdXz2NqlAlrEIEJutaSinvRr7p3uQ8Q'
+
+        resposta = requests.get("https://editacodigo.com.br/gpt/index.php", params={'pagina': editacodigo,'sistema': sistema, 'chave_api': chave_api, 'mensagem_usuario': msg}, headers=agent)
         time.sleep(3)
+        resposta = resposta.text  
 
 
         #RESPONDE A MSG
@@ -127,6 +120,7 @@ tela2 = [
     [sg.Text('BEM VINDO AO BOT DE INTELGENCIA ARTIFICIAL')],
     [sg.Text('Insira a API da OPENAI')],
     [sg.Input(key='apiopenai')],
+    [sg.Text('Insira o texto')],
     [sg.Multiline(size=(80,20),key='texto')],
     [sg.Text('TENHA O CELULAR EM MÃOS')],
     [sg.Text('CLIQUE ABAIXO PARA CAPTURAR O QR CODE')],
